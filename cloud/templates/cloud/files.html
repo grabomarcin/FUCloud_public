@@ -1,0 +1,77 @@
+{% extends 'cloud/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="files">
+    <div class="minefiles">
+        <h2>{{ welcome_user_files_view }} {{ username }} !</h2>
+        <h1>{{ subtitle_files_view }}</h1>
+        {% if is_root == False %}
+        <p><a href="{% url 'cloud:back_to_superior' %}" class="buttback"><span><b>⋘</b></span></a></p>
+        {%endif%}
+        <table class="filetable">
+            {% for folder in directory_list %}
+            <tr>
+                <td><a class="folder" href="{% url 'cloud:go_to_folder' folder.name%}"><img src="{% static 'cloud/images/folder.svg' %}" alt="folder.svg" height="15px" width="auto">  {{ folder }}</td>
+                <td>
+                    <a href="{% url 'cloud:delete_folder' folder.id %}" class="buttsave"><span>Usuń folder</span></a>
+                </td>
+                <td>
+                    <form action="{% url 'cloud:rename' folder.id %}" method="post">
+                        {% csrf_token %}
+                        <input class="newname" type="text" name="new_name" required>
+                        <input class="buttsave" type="submit" value="Zmień nazwę">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <table class="filetable">
+            {% for file in files_list %}
+            <tr>
+                <td>{{ file.name }}</td>
+                <td>
+                    <a href="{{file.file.url}}" class="buttsave"><span>Pobierz plik</span></a>
+                </td>
+                <td>
+                    <a href="{% url 'cloud:delete_file' file.id %}" class="buttsave"><span>Usuń</span></a>
+                </td>
+                {% if file.is_shared == False %}
+                <td>
+                    <a href="{% url 'cloud:share_file' file.id %}" class="buttsave"><span>Udostępnij</span></a>
+                </td>
+                {% else %}
+                <td>
+                    <a href="{% url 'cloud:stop_sharing' file.id %}" class="buttshare"><span>Przerwij udostępnianie</span></a>
+                </td>
+                {%endif%}
+                 <td>
+                    <a href="{% url 'cloud:cut' file.id %}" class="buttsave"><span>Wytnij</span></a>
+                </td>
+
+            </tr>
+            {% endfor %}
+       </table>
+
+        <a href="{% url 'cloud:upload' %}" class="buttupload"><span>Dodaj plik</span><a>
+        <a href="{% url 'cloud:add_folder' %}" class="buttupload"><span>Dodaj folder</span><a>
+        <a href="{% url 'cloud:paste' %}" class="buttupload"><span>Wklej</span><a>
+
+
+    </div>
+<div class="space">
+    <div class=element">
+        <h3>Zajęta przestrzeń</h3>
+        <progress class="file" max="100" value="{{ used_space_percent }}">{{ used_space_percent }}</progress>
+        <p>Wolna przestrzeń: {{available_space}}MB</p>
+    </div>
+    <div>
+</div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

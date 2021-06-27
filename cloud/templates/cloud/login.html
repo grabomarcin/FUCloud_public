@@ -1,0 +1,19 @@
+{% extends "cloud/base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!--Login-->
+<div class="login">
+  <h1>Log in</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="element>"><input class="input" type="text" name="username" placeholder="Nazwa użytkownika"></div>
+    <div class="element>"><input class="input" type="password" name="password" placeholder="Hasło"></div>
+    <div class="element>"><button class="butt" type="submit"><span>Zaloguj się</span></button></div>
+  </form>
+  <p class="text-center">Nie posiadasz konta? <a href="/register">Dołącz do naszej chmury</a>.</p>
+</div>
+
+{% endblock %}

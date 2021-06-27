@@ -1,0 +1,10 @@
+{% extends 'cloud/base.html' %}
+
+{% block content %}
+
+<div class="sharefile">
+<p>Udostęponiony plik jest dostępny pod następującym linkiem: <a href="{%url 'cloud:share' id_file%}">{{shared_link}}</a></p>
+
+<a class="buttupload" href="{% url 'cloud:files' %}"><span>Powrót</span></a>
+</div>
+{% endblock %}

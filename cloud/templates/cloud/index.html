@@ -1,0 +1,25 @@
+{% extends 'cloud/base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="main">
+        <h1>{{ main_text_index }}</h1>
+        <p>{{ subtitle_index }}</p>
+        {% if user.is_authenticated %}
+        <div class="butt3">
+            <a href="/files"><button class="buttp"><span>{{ go_to_your_files_button }}</span></button></a>
+            </div>
+        {% else %}
+        <div class="butt1">
+            <a href="/login"><button class="butt"><span>LOG IN</span></button></a>
+        </div>
+        <div class="butt2">
+            <a href="/register"><button class="butt"><span>SIGN UP</span></button></a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

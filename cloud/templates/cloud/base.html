@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+
+	<meta charset="utf-8">
+	<title>Fucloud</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'cloud/style.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="head">
+<header>
+    <div class="logo">
+        <a href = "{%url 'cloud:index'%}"> <img src="{% static 'cloud/images/logo.png' %}"> <a/>
+    </div>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+        <a class="nav-link" href="/logout">{{ logout_link }}</a>
+      </li>
+      <li >
+        <p class="nav-link"> {{ welcome_logged_user_link }} {{user.username}}</p>
+      </li>
+            {% else %}
+            <li class="nav-item">
+        <a class="nav-link" href="/login">{{ login_link }}</a>
+        <a class="nav-link" href="/register">{{ register_link }}</a>
+
+      </li>
+
+      {% endif %}
+        </ul>
+    </nav>
+</header>
+    {% for message in messages %}
+
+                    <div class="alert">
+                            {{ message }}
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+
+                    </div>
+            {% endfor %}
+</div>
+<div class="container">
+ {% block content %}
+    {% endblock %}
+
+</div>
+
+<footer>
+    <p>{{ footer }}</p>
+</footer>
+</body>
+</html>

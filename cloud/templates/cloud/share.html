@@ -1,0 +1,11 @@
+{% extends 'cloud/base.html' %}
+
+{% block content %}
+<div class="share">
+ <td>{{ shared_file.name }} {{shared_file_size}}</td>
+    <p></p>
+ <td>
+   <a href="{{shared_file.file.url}}" class="buttupload"><span>Pobierz plik</span></a>
+ </td>
+</div>
+{% endblock %}

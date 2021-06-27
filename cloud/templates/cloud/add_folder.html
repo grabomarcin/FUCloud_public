@@ -1,0 +1,25 @@
+{% extends 'cloud/base.html' %}
+
+{% block content %}
+
+<div class="upload">
+    <div class="mainupload">
+        <h1>Podaj nazwę katalogu:</h1>
+
+        <form method="post">
+                {% csrf_token %}
+                <div class="element>"><input class="input" type="text" name="name" placeholder="Nazwa folderu"></div>
+            <input class="buttupload" type="submit" value="Dodaj folder">
+        </form>
+        {% if added_folder %}
+            <p>Success!</p>
+        {% endif %}
+        {% if same_name %}
+            <p>Folder o tej nazwie już istnieje!</p>
+        {% endif %}
+
+        <a class="buttupload" href="{% url 'cloud:files' %}"><span>Powrót</span></a>
+    </div>
+</div>
+
+{% endblock %}

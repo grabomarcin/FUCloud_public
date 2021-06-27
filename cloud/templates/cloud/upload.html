@@ -1,0 +1,53 @@
+{% extends 'cloud/base.html' %}
+{%  load static %}
+
+{% block content %}
+
+
+
+
+<div class="upload">
+    <div class="mainupload">
+        <h1>Wybierz plik</h1>
+
+        <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" id="file" onchange = "Filevalidation()">
+            <input class="buttupload" type="submit" value="Prześlij">
+        </form>
+
+        {% if uploaded_file_url %}
+            <p>File uploaded at {{ uploaded_file_url }}</p>
+        {% endif %}
+        {% if too_large_file %}
+            <p>Plik jest za duży</p>
+        {% endif %}
+
+        <a class="buttupload" href="{% url 'cloud:files' %}"><span>Powrót</span></a>
+    </div>
+</div>
+
+<script>
+    Filevalidation = () => {
+        var available_space = "{{available_space}}";
+        const fi = document.getElementById('file');
+        if (fi.files.length > 0) {
+            for (const i = 0; i <= fi.files.length - 1; i++) {
+
+                const fsize = fi.files.item(i).size;
+                const file = fsize;
+                if (file >= available_space*1024*1024) {
+                    alert(
+                      "Plik jest za duży");
+                        window.location.reload(true);
+                }
+
+                else {
+                    document.getElementById('size').innerHTML = '<b>'
+                    + file + '</b> KB';
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}
